@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>가위바위보 게임</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        #result {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>가위바위보 게임</h1>
+
+    <div>
+        <button id="scissors">가위 ✌</button>
+        <button id="rock">바위 ✊</button>
+        <button id="paper">보 ✋</button>
+    </div>
+
+    <p id="player-choice">나의 선택: -</p>
+    <p id="computer-choice">컴퓨터의 선택: -</p>
+    <p id="result">결과: -</p>
+
+    <script>
+        const choices = ['가위', '바위', '보'];
+        const rockBtn = document.getElementById('rock');
+        const paperBtn = document.getElementById('paper');
+        const scissorsBtn = document.getElementById('scissors');
+        const playerChoiceDisplay = document.getElementById('player-choice');
+        const computerChoiceDisplay = document.getElementById('computer-choice');
+        const resultDisplay = document.getElementById('result');
+
+      
+        scissorsBtn.addEventListener('click', () => playGame('가위'));
+        rockBtn.addEventListener('click', () => playGame('바위'));
+        paperBtn.addEventListener('click', () => playGame('보'));
+
+        function getComputerChoice() {
+            const randomIndex = Math.floor(Math.random() * choices.length);
+            return choices[randomIndex];
+        }
+
+        function determineWinner(playerChoice, computerChoice) {
+            if (playerChoice === computerChoice) {
+                return '무승부!';
+            }
+            
+            if (
+                (playerChoice === '가위' && computerChoice === '보') ||
+                (playerChoice === '바위' && computerChoice === '가위') ||
+                (playerChoice === '보' && computerChoice === '바위')
+            ) {
+                return '승리!';
+            } else {
+                return '패배!';
+            }
+        }
+
+        function playGame(playerChoice) {
+            const computerChoice = getComputerChoice();
+
+            playerChoiceDisplay.textContent = `나의 선택: ${playerChoice}`;
+            computerChoiceDisplay.textContent = `컴퓨터의 선택: ${computerChoice}`;
+            
+            const result = determineWinner(playerChoice, computerChoice);
+            resultDisplay.textContent = `결과: ${result}`;
+
+            if (result === '승리!') {
+                resultDisplay.style.color = 'green';
+            } else if (result === '패배!') {
+                resultDisplay.style.color = 'red';
+            } else {
+                resultDisplay.style.color = 'blue';
+            }
+        }
+    </script>
+
+</body>
+</html>
